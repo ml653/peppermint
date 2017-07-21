@@ -1,9 +1,17 @@
 class ExpensesController < ApplicationController
   before_action :authenticate_expenses
 
-  def find
+  def index
     id = params[:id]
-    render json: { a: 1 }
+  end
+
+  def create
+  end
+
+  def delete
+  end
+
+  def update
   end
 
   def authenticate_expenses
