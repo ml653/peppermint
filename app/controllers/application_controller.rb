@@ -14,10 +14,12 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate(&prc)
+    # If no proc given, no special authentication scheme required
+    prc ||= Proc.new { true }
     token = get_token
     user_id = AuthHelper.get_valid_id(token)
 
-    # If no valid token or prc returns false
+    # If no valid token or prc (custom authentication) returns false
     if !user_id || !prc.call(user_id)
       render json: {error: "unauthorized"}, status: 401
     end
