@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     id = AuthHelper.get_valid_id(get_token)
-    User.find(id)
+    User.find_by_id(id)
   end
 
   def get_token
