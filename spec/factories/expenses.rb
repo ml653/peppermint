@@ -8,4 +8,3 @@ FactoryGirl.define do
     f.description { Faker::HarryPotter.quote }
   end
 end
-

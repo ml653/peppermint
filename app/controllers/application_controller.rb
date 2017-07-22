@@ -1,4 +1,4 @@
-require_relative './auth_helper'
+require_relative '../helpers/auth_helper'
 
 class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception

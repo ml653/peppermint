@@ -1,6 +1,6 @@
 require 'jwt'
 
-class AuthHelper
+module AuthHelper
   ALGORITHM = 'HS256'
 
   def self.encode(payload)
