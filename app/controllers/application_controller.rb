@@ -2,23 +2,23 @@ require_relative './auth_helper'
 
 class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
-  helper_method :authenticate, :current_user
+  helper_method :current_user
 
-  def current_user(token)
-    id = AuthHelper.get_valid_id(token)
-    if id
-      return @current_user = User.find(id)
-    end
+  def current_user
+    id = AuthHelper.get_valid_id(get_token)
+    User.find(id)
   end
 
   def get_token
     request.env.fetch("HTTP_AUTHORIZATION").split("\s").last
   end
 
-  def authenticate(user_id)
+  def authenticate(&prc)
     token = get_token
-    id = AuthHelper.get_valid_id(token)
-    if id != user_id
+    user_id = AuthHelper.get_valid_id(token)
+
+    # If no valid token or prc returns false
+    if !user_id || !prc.call(user_id)
       render json: {error: "unauthorized"}, status: 401
     end
   end

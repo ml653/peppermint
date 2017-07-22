@@ -5,4 +5,5 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
   validates :password, length: { within: 6...64, allow_blank: true }
 
+  has_many :expenses
 end

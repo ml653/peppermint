@@ -5,7 +5,7 @@ class SessionController < ApplicationController
   def create
     @user = User.find_by(email: login_params[:email])
     if @user && @user.authenticate(login_params[:password])
-      @token = AuthHelper.encode(@user.id.to_s)
+      @token = AuthHelper.encode(@user.id)
       render :show
     else
       render json: ["Sorry, you entered an incorrect email address or password."], status: 422

@@ -12,7 +12,7 @@ class AuthHelper
   def self.get_valid_id(token)
     begin
       hash = decode(token).first
-      return hash['id']
+      return hash['id'].to_i
     rescue JWT::DecodeError
       return nil
     end
