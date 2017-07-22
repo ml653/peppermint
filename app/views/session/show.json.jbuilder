@@ -1,1 +1,1 @@
-json.partial! '/shared/user', user: @user, token: @token
+json.partial! '/shared/user', user: @user

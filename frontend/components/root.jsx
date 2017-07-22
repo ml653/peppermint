@@ -1,5 +1,6 @@
 import React from 'react'
 import Main from './main.jsx'
+import LoginContainer from './login_container'
 
 import { Provider } from 'react-redux'
 import { Switch } from 'react-router'
@@ -11,7 +12,8 @@ class Root extends React.Component {
     return <Provider store={this.props.store}>
         <HashRouter>
           <Switch>
-            <AuthRoute path='/' component={Main}/>
+              <AuthRoute path='/' component={LoginContainer}/>
+              <ProtectedRoute path='/' component={Main}/>
           </Switch>
         </HashRouter>
       </Provider>

@@ -15,6 +15,15 @@ export const login = user => (
   })
 )
 
+export const loadUser = user => (
+  $.ajax({
+    method: 'GET',
+    url: '/session',
+    headers: { 'x-my-custom-header': 'some value' },
+    data: { user }
+  })
+)
+
 export const logout = () => (
   $.ajax({
     method: 'DELETE',
