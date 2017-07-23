@@ -11,7 +11,6 @@ describe ExpensesController do
     before(:each) do
       @token = AuthHelper.encode(@user.id)
       @request.session[:peppermint_web_token] = @token
-      cookies[:peppermint_web_token] = @token
     end
 
     describe "#GET" do
@@ -92,7 +91,6 @@ describe ExpensesController do
   describe "without valid JSON web token" do
     before(:each) do
       @request.session[:peppermint_web_token] = nil
-      cookies[:peppermint_web_token] = nil
     end
 
     describe "#GET" do

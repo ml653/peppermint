@@ -34,8 +34,6 @@ class ExpensesController < ApplicationController
   def update
     @expense = Expense.find_by_id(params[:id])
     if @expense && @expense.update(expense_params)
-      p 'AAAAAAAAAAAAAAAAAAAA'
-      p @expense
       render :show
     else
       render json: @expense.errors.full_messages, status: 422
