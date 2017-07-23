@@ -34,6 +34,8 @@ class ExpensesController < ApplicationController
   def update
     @expense = Expense.find_by_id(params[:id])
     if @expense && @expense.update(expense_params)
+      p 'AAAAAAAAAAAAAAAAAAAA'
+      p @expense
       render :show
     else
       render json: @expense.errors.full_messages, status: 422
@@ -43,7 +45,6 @@ class ExpensesController < ApplicationController
   def authenticate_expenses
     authenticate do |user_id|
       # Requires special permissions (e.g. expense.user_id == user_id): update, delete
-      p action_name, user_id
       if ['update', 'destroy'].index(action_name)
         expense = Expense.find_by_id(params[:id])
         expense && expense.user_id == user_id

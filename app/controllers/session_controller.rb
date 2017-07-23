@@ -13,6 +13,12 @@ class SessionController < ApplicationController
     end
   end
 
+  def destroy
+    # Should add Token to blacklist to invalidate in addition to removing JWT from session
+    # Not implemented in the interest of time
+    logout!
+  end
+
   def login_params
     params.require(:user).permit(:email, :password)
   end

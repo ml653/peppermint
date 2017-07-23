@@ -39,7 +39,7 @@ export const indexExpenses = () => (
   })
 )
 
-export const createExpenses = (expense) => (
+export const createExpense = (expense) => (
   $.ajax({
     method: 'POST',
     url: `/expenses/`,
@@ -47,14 +47,14 @@ export const createExpenses = (expense) => (
   })
 )
 
-export const deleteExpenses = (id) => (
+export const deleteExpense = (id) => (
   $.ajax({
     method: 'DELETE',
     url: `/expenses/${id}`
   })
 )
 
-export const updateExpenses = (expense) => (
+export const updateExpense = (expense) => (
   $.ajax({
     method: 'PATCH',
     url: `/expenses/${expense.id}`,

@@ -15,17 +15,17 @@ export const removeExpense = id => ({
 export const createExpense = expense => dispatch => (
   ApiUtil.createExpense(expense)
     .done(expense => dispatch(receiveExpense(expense)) )
-    .fail(err => console.log(err.responseJSON))
+    .fail(err => alert(err.responseJSON))
 )
 
 export const updateExpense = expense => dispatch => (
   ApiUtil.updateExpense(expense)
     .done(expense => dispatch(receiveExpense(expense)))
-    .fail(err => console.log(err.responseJSON))
+    .fail(err => alert(err.responseJSON))
 )
 
 export const deleteExpense = id => dispatch => {
   ApiUtil.deleteExpense(id)
     .done(expense => dispatch(removeExpense(expense.id)))
-    .fail(err => console.log(err.responseJSON))
+    .fail(err => alert(err.responseJSON))
 }
