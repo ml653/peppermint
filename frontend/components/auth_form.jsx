@@ -1,6 +1,7 @@
 import React from 'react'
+import { values } from 'lodash'
 
-class LoginForm extends React.Component {
+class AuthForm extends React.Component {
 
   constructor(props) {
     super(props)
@@ -12,13 +13,13 @@ class LoginForm extends React.Component {
 
     this.updateField = this.updateField.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.toSignUp = this.toSignUp.bind(this)
     this.demo = this.demo.bind(this)
     this.setFieldsWithDelay = this.setFieldsWithDelay.bind(this)
   }
 
   updateField(field) {
     return e => {
+      e.preventDefault()
       this.setState({
         [field]: e.currentTarget.value
       })
@@ -27,12 +28,11 @@ class LoginForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    this.props.login(this.state)
-  }
-
-  toSignUp(e) {
-    e.preventDefault()
-    this.props.history.push('/sign-up')
+    if(this.state.submitType === 'login') {
+      this.props.login(this.state)
+    } else {
+      this.props.signup(this.state)
+    }
   }
 
   demo(e) {
@@ -60,15 +60,16 @@ class LoginForm extends React.Component {
 
   render() {
 
+    const errors = values(this.props.errors).map((err, i) => (
+      <li key={i}>{err}</li>
+    ))
     return(
       <div>
         <div className="auth">
           <div className='auth-form'>
-            <ul>
-            </ul>
             <form onSubmit={this.handleSubmit}>
               <h1>Welcome to Peppermint</h1>
-              <p>Enter your <b>email address</b> and <b>password</b>.</p>
+              <p>Enter your <b>email address</b> and <b>password</b> to signup or login.</p>
 
               <input
                 placeholder='email@gmail.com'
@@ -85,19 +86,24 @@ class LoginForm extends React.Component {
                 required
                 onChange={this.updateField('password')}/>
 
-              <button
-                className='sign-in'
-                type='submit'
-                onSubmit={this.handleSubmit}>
-                Sign In
-              </button>
+              <input
+                onClick={()=>{this.state.submitType = 'login'}}
+                value='Login'
+                type='submit'/>
+
+              <input
+                onClick={()=>{this.state.submitType = 'signup'}}
+                value='Signup'
+                type='submit'/>
 
               <button
-                className='sign-in'
                 onClick={this.demo}>
-                Demo
+                Demo Admin
               </button>
             </form>
+              <ul>
+              { errors }
+              </ul>
           </div>
         </div>
       </div>
@@ -105,4 +111,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm
+export default AuthForm

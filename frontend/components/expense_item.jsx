@@ -28,12 +28,12 @@ export default class ExpenseItem extends React.Component {
 
   save(e) {
     e.preventDefault()
-    console.log(this.state.expense.date)
-    const date = new Date(this.state.expense.date)
+    const date = new Date(this.state.expense.date.replace(/-/, '/'))
+    console.log(this.state.expense.date, date)
     this.props.updateExpense({
       ...this.state.expense,
-      date: date.toISOString()
-    })
+      date: date.toISOString()})
+    .then(_ => alert('update success!'))
   }
 
   delete(id) {
@@ -71,7 +71,7 @@ export default class ExpenseItem extends React.Component {
             onChange={this.updateField('amount')}
             step="0.01"/>
         </td>
-        <td>{<button onClick={this.save}>Save</button>}</td>
+        <td>{<button onClick={this.save}>Update</button>}</td>
         <td>{<button onClick={this.delete(this.state.expense.id)}>Delete</button>}</td>
       </tr>
     } else {

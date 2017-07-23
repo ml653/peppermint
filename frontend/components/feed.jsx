@@ -4,12 +4,12 @@ import { values } from 'lodash'
 
 export default class ExpensesFeed extends React.Component {
   render() {
-    console.log(this.props)
     const expensesItems = _
       .values(this.props.expenses)
       .map((n, i) => {
       return <ExpenseItem
-        editable={this.props.editable}
+        // If the user is permitted to edit, only permits them to edit their own expenses
+        editable={this.props.editable ? this.props.user.id == n.user_id : false }
         key={n.id}
         expense={n}
         user={this.props.user}
@@ -22,8 +22,8 @@ export default class ExpensesFeed extends React.Component {
         <tr>
           <th>Email:</th>
           <th>Description:</th>
-          <th>Date:</th>
-          <th>Amount:</th>
+          <th>Date (m/d/y):</th>
+          <th>Amount ($):</th>
         </tr>
         {expensesItems}
       </tbody>

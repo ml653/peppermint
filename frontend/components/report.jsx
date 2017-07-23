@@ -12,7 +12,7 @@ export default class ExpenseForm extends React.Component {
 
     this.state = {
       params: this.newReport,
-      expenses: []
+      report: {}
     }
 
     this.updateField = this.updateField.bind(this)
@@ -22,11 +22,11 @@ export default class ExpenseForm extends React.Component {
   generateReport(e) {
     e.preventDefault()
     generateReport(
-      new Date(this.state.params.start_date).getTime(),
-      new Date(this.state.params.end_date).getTime())
+      new Date(this.state.params.start_date.replace(/-/, '-')).getTime(),
+      new Date(this.state.params.end_date.replace(/-/, '-')).getTime())
     .then(result => {
       console.log(result)
-      this.setState({ expenses: result.expenses })
+      this.setState({ report: result })
     })
   }
 
@@ -57,7 +57,8 @@ export default class ExpenseForm extends React.Component {
         <input type='submit' value='Generate'/>
       </form>
 
-      <FeedContainer expenses={this.state.expenses} editable={false}/>
+      <h4>Amount spent ($): {this.state.report.sum}</h4>
+      <FeedContainer expenses={ this.state.report.expenses } editable={false}/>
     </div>
   }
 }
