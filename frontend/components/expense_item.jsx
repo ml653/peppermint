@@ -4,7 +4,6 @@ export default class ExpenseItem extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      editable: this.props.expense.user_id === this.props.user.id,
       expense: {
         ...this.props.expense,
         date: this.parseDate(this.props.expense.date)
@@ -16,18 +15,20 @@ export default class ExpenseItem extends React.Component {
     this.updateField = this.updateField.bind(this)
   }
 
-  updateField(field) {
-    return e => {
-      this.setState({
-        expense: {
-          ...this.state.expense,
-          [field]: e.currentTarget.value
-        }
-      })
+    updateField(field) {
+      return e => {
+        this.setState({
+          expense: {
+            ...this.state.expense,
+            [field]: e.currentTarget.value
+          }
+        })
+      }
     }
-  }
 
-  save() {
+  save(e) {
+    e.preventDefault()
+    console.log(this.state.expense.date)
     const date = new Date(this.state.expense.date)
     this.props.updateExpense({
       ...this.state.expense,
@@ -45,11 +46,11 @@ export default class ExpenseItem extends React.Component {
     let [m, d, y] = new Date(dateStr)
       .toLocaleDateString()
       .split('/')
-    return `${y}/${'00'.slice(m.length) + m}/${'00'.slice(d.length) + d}`
+    return `${y}-${'00'.slice(m.length) + m}-${'00'.slice(d.length) + d}`
   }
 
   render() {
-    if (this.state.editable) {
+    if (this.props.editable) {
       return <tr>
         <td>
           {this.state.expense.email}
@@ -60,7 +61,7 @@ export default class ExpenseItem extends React.Component {
             onChange={this.updateField('description')}/>
         </td>
         <td>
-          <input type='text'
+          <input type='date'
             value={this.state.expense.date}
             onChange={this.updateField('date')}/>
         </td>
@@ -70,16 +71,12 @@ export default class ExpenseItem extends React.Component {
             onChange={this.updateField('amount')}
             step="0.01"/>
         </td>
-        <td>{<button  onClick={this.save}>Save</button>}</td>
-        <td>{this.state.editable && <button
-          onClick={this.delete(this.state.expense.id)}>
-          Delete
-          </button>}
-        </td>
+        <td>{<button onClick={this.save}>Save</button>}</td>
+        <td>{<button onClick={this.delete(this.state.expense.id)}>Delete</button>}</td>
       </tr>
     } else {
       return <tr>
-        <td>{this.state.expense.user_email} {this.state.expense.id}</td>
+        <td>{this.state.expense.email}</td>
         <td>{this.state.expense.description}</td>
         <td>{this.state.expense.date}</td>
         <td>{this.state.expense.amount}</td>

@@ -14,20 +14,26 @@ export default class ExpenseForm extends React.Component {
     }
 
     this.updateField = this.updateField.bind(this)
-    this.save = this.save.bind(this)
+    this.createExpense = this.createExpense.bind(this)
   }
 
-  save() {
+  createExpense(e) {
+    e.preventDefault();
+    console.log(this.state.expense)
     const date = new Date(this.state.expense.date)
     this.props.createExpense({
       ...this.state.expense,
       date: date.toISOString()
     })
-    .then(_ => this.setState({ expense: this.newExpense }))
+    .then(_ => {
+      alert('Expense created!')
+      this.setState({ expense: this.newExpense })
+    })
   }
 
   updateField(field) {
     return e => {
+      e.preventDefault();
       this.setState({
         expense: {
           ...this.state.expense,
@@ -37,33 +43,26 @@ export default class ExpenseForm extends React.Component {
     }
   }
 
-  parseDate(dateStr) {
-    let [m, d, y] = new Date(dateStr)
-      .toLocaleDateString()
-      .split('/')
-    return `${y}/${'00'.slice(m.length) + m}/${'00'.slice(d.length) + d}`
-  }
-
   render() {
-    return <tr>
-      <td>New Expense</td>
-      <td>
-        <input type='text'
-          value={this.state.expense.description}
-          onChange={this.updateField('description')}/>
-      </td>
-      <td>
-        <input type='text'
-          value={this.state.expense.date}
-          onChange={this.updateField('date')}/>
-      </td>
-      <td>
-        <input type='number'
-          value={this.state.expense.amount}
-          onChange={this.updateField('amount')}
-          step="0.01"/>
-      </td>
-      <td>{<button  onClick={this.save}>Create</button>}</td>
-    </tr>
+    return <form onSubmit={this.createExpense}>
+      <h2>Create Expense</h2>
+      <input type='text'
+        required
+        placeholder='Description'
+        value={this.state.expense.description}
+        onChange={this.updateField('description')}/>
+      <input type='date'
+        required
+        placeholder='Date'
+        value={this.state.expense.date}
+        onChange={this.updateField('date')}/>
+      <input type='number'
+        required
+        placeholder='Amount'
+        value={this.state.expense.amount}
+        onChange={this.updateField('amount')}
+        step="0.01"/>
+      <input type='submit' value='Create'/>
+    </form>
   }
 }

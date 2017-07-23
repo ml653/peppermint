@@ -13,7 +13,6 @@ class ReportsController < ApplicationController
 
     @sum = active_record_expenses.sum(:amount)
     @expenses = active_record_expenses.to_a
-    p 'a', @expenses
 
     render :show
   end

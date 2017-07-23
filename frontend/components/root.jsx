@@ -9,7 +9,6 @@ import { AuthRoute, ProtectedRoute } from 'Util/route_util'
 
 class Root extends React.Component {
   render() {
-    console.log(MainContainer)
     return <Provider store={this.props.store}>
         <HashRouter>
           <Switch>
