@@ -10,17 +10,14 @@ class ApplicationController < ActionController::Base
   end
 
   def get_token
-    cookies[:peppermint_web_token]
     session[:peppermint_web_token]
   end
 
   def login!(token)
-    cookies[:peppermint_web_token] = token
     session[:peppermint_web_token] = token
   end
 
   def logout!
-    cookies[:peppermint_web_token] = nil
     session[:peppermint_web_token] = nil
   end
 
